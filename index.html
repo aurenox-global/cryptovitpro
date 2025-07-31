@@ -1,0 +1,2020 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRYPTO VIT PRO - Análisis de Mercados en Tiempo Real</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #e0e0e0;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #64ffda;
+            text-decoration: none;
+            text-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #e0e0e0;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #64ffda;
+            text-shadow: 0 0 5px rgba(100, 255, 218, 0.5);
+        }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .mobile-menu span {
+            width: 25px;
+            height: 3px;
+            background: #e0e0e0;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 0 80px;
+            text-align: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Markets Section */
+        .markets {
+            padding: 80px 0;
+            background: rgba(22, 33, 62, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: #e0e0e0;
+            text-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
+        }
+
+        .markets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .market-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .market-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(100, 255, 218, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .market-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .crypto-icon { color: #f7931a; }
+        .forex-icon { color: #00d4aa; }
+        .stocks-icon { color: #667eea; }
+
+        .market-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #e0e0e0;
+        }
+
+        .market-card p {
+            color: #b0b0b0;
+            margin-bottom: 1.5rem;
+        }
+
+        .market-card .btn {
+            width: 100%;
+            background: linear-gradient(45deg, #64ffda, #00bcd4);
+            color: #1a1a2e;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(100, 255, 218, 0.3);
+        }
+
+        .market-card .btn:hover {
+            background: linear-gradient(45deg, #4fd3b8, #00acc1);
+            box-shadow: 0 6px 20px rgba(100, 255, 218, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Market Statistics */
+        .market-stats {
+            margin-top: 4rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border: 1px solid rgba(100, 255, 218, 0.2);
+            border-radius: 20px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .stats-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            color: white;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #ffd700;
+        }
+
+        .stat-info h4 {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .stat-info p {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            background: rgba(15, 52, 96, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border: 1px solid rgba(100, 255, 218, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: #64ffda;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #e0e0e0;
+        }
+
+        .feature-card p {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+        }
+
+        /* About Section */
+        .about {
+            padding: 80px 0;
+            background: rgba(22, 33, 62, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #e0e0e0;
+            text-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            color: #b0b0b0;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-image {
+            background: linear-gradient(45deg, #1a1a2e, #16213e);
+            border: 1px solid rgba(100, 255, 218, 0.2);
+            border-radius: 20px;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64ffda;
+            font-size: 4rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0f1419 0%, #1a1a2e 100%);
+            border-top: 1px solid rgba(100, 255, 218, 0.2);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: #64ffda;
+            text-shadow: 0 0 5px rgba(100, 255, 218, 0.3);
+        }
+
+        .footer-section p, .footer-section a {
+            color: #bdc3c7;
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .footer-section a:hover {
+            color: #64ffda;
+            text-shadow: 0 0 5px rgba(100, 255, 218, 0.5);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #34495e;
+            color: #bdc3c7;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #64ffda, #00bcd4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1a1a2e;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(100, 255, 218, 0.3);
+        }
+
+        .social-links a:hover {
+            background: linear-gradient(45deg, #4fd3b8, #00acc1);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 255, 218, 0.4);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .about-image {
+                height: 300px;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Market Data Widget */
+        .market-widget, .tradingview-widget {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            color: white;
+        }
+
+        .widget-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .price-ticker {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .price-ticker:last-child {
+            border-bottom: none;
+        }
+
+        .crypto-name {
+            font-weight: 500;
+        }
+
+        .crypto-price {
+            font-weight: 600;
+        }
+
+        .price-change {
+            font-size: 0.9rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 5px;
+        }
+
+        .positive { background: rgba(46, 204, 113, 0.3); color: #2ecc71; }
+        .negative { background: rgba(231, 76, 60, 0.3); color: #e74c3c; }
+
+        /* TradingView Widget Styles */
+        #tradingview-widget-container {
+            height: 400px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+
+        .tradingview-widget iframe {
+            border-radius: 10px;
+        }
+
+        .symbol-selector {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+        }
+
+        .symbol-selector select {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 5px;
+            padding: 8px 12px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .symbol-selector select:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateY(-1px);
+        }
+
+        /* Loading Animation */
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Error Message */
+        .error-message {
+            background: rgba(231, 76, 60, 0.2);
+            color: #e74c3c;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        /* Market Modal Styles */
+        .market-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border: 1px solid rgba(100, 255, 218, 0.2);
+            margin: 2% auto;
+            padding: 0;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 1200px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalSlideIn 0.3s ease-out;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 20px 20px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .close-modal {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .close-modal:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .modal-body {
+            padding: 2rem;
+            color: white;
+        }
+
+        .market-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .market-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .market-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .market-item h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: #ffd700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .crypto-icon-small {
+            font-size: 1rem;
+            width: 20px;
+            height: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .market-item .price {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .market-item .change {
+            font-size: 0.9rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .market-item .positive { background: rgba(46, 204, 113, 0.3); color: #2ecc71; }
+        .market-item .negative { background: rgba(231, 76, 60, 0.3); color: #e74c3c; }
+
+        .modal-chart {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1rem;
+            margin-top: 2rem;
+            height: 450px;
+            position: relative;
+            border: 1px solid rgba(100, 255, 218, 0.1);
+        }
+
+        .loading-chart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            font-size: 1.1rem;
+            color: #64ffda;
+            text-align: center;
+        }
+
+        .loading-chart .loading-spinner {
+            margin-bottom: 1rem;
+            width: 40px;
+            height: 40px;
+            border-width: 4px;
+        }
+
+        .loading-chart p {
+            margin: 0.5rem 0;
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        /* Modal Symbol Selector */
+        .modal-symbol-selector {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+        }
+
+        .modal-symbol-selector select {
+            background: rgba(26, 26, 46, 0.9);
+            border: 1px solid rgba(100, 255, 218, 0.3);
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #e0e0e0;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.3s ease;
+            min-width: 180px;
+        }
+
+        .modal-symbol-selector select:hover {
+            border-color: rgba(100, 255, 218, 0.5);
+            background: rgba(26, 26, 46, 1);
+        }
+
+        .modal-symbol-selector select:focus {
+            border-color: #64ffda;
+            box-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
+        }
+
+        .modal-symbol-selector select option {
+            background: #1a1a2e;
+            color: #e0e0e0;
+            padding: 8px;
+        }
+
+        /* Modal Symbol Selector */
+        .modal-symbol-selector {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+        }
+
+        .modal-symbol-selector select {
+            background: rgba(26, 26, 46, 0.9);
+            border: 1px solid rgba(100, 255, 218, 0.3);
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #e0e0e0;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.3s ease;
+            min-width: 180px;
+        }
+
+        .modal-symbol-selector select:hover {
+            border-color: rgba(100, 255, 218, 0.5);
+            background: rgba(26, 26, 46, 1);
+        }
+
+        .modal-symbol-selector select:focus {
+            border-color: #64ffda;
+            box-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
+        }
+
+        .modal-symbol-selector select option {
+            background: #1a1a2e;
+            color: #e0e0e0;
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">CRYPTO VIT PRO</a>
+            <ul class="nav-links">
+                <li><a href="#home">Inicio</a></li>
+                <li><a href="#markets">Mercados</a></li>
+                <li><a href="#features">Características</a></li>
+                <li><a href="#about">Acerca de</a></li>
+                <li><a href="#contact">Contacto</a></li>
+            </ul>
+            <div class="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <h1 class="fade-in-up">CRYPTO VIT PRO</h1>
+            <p class="fade-in-up">
+                Crypto Vit Pro es una herramienta de información y análisis de los mercados de cryptomonedas 
+                aunque también contiene otros mercados. Ofrecemos gráficos profesionales y datos en tiempo real.
+            </p>
+            <div class="cta-buttons fade-in-up">
+                <a href="#markets" class="btn btn-primary">
+                    <i class="fas fa-chart-line"></i> Explorar Mercados
+                </a>
+                <a href="https://mega.nz/folder/oWRRyDIB#1CnNOkoIap8AVO9UI7os5Q" class="btn btn-secondary" target="_blank">
+                    <i class="fas fa-download"></i> DESCARGAR
+                </a>
+            </div>
+
+            <!-- Market Data Widget -->
+            <div class="market-widget fade-in-up">
+                <div class="widget-title">
+                    <i class="fas fa-chart-line"></i> Mercados en Tiempo Real (Binance)
+                </div>
+                <div id="crypto-tickers">
+                    <div class="price-ticker">
+                        <span class="crypto-name">Cargando...</span>
+                        <span class="crypto-price">--</span>
+                        <span class="price-change">--</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TradingView Widget -->
+            <div class="tradingview-widget fade-in-up">
+                <div class="widget-title">
+                    <i class="fas fa-chart-area"></i> Gráfico en Tiempo Real (TradingView)
+                </div>
+                <div id="tradingview-widget-container"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Markets Section -->
+    <section id="markets" class="markets">
+        <div class="container">
+            <h2 class="section-title">MERCADOS FUTUROS</h2>
+            <div class="markets-grid">
+                <div class="market-card">
+                    <div class="market-icon crypto-icon">
+                        <i class="fab fa-bitcoin"></i>
+                    </div>
+                    <h3>Mercado Crypto</h3>
+                    <p>¡Bienvenidos al mercado Crypto en tiempo real! Accede a gráficos profesionales, análisis técnico y datos actualizados de todas las principales cryptomonedas, incluyendo Bitcoin, Ethereum, Toncoin y más.</p>
+                    <button class="btn" onclick="openCryptoMarket()">ENTRAR</button>
+                </div>
+                <div class="market-card">
+                    <div class="market-icon forex-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3>Mercado Forex</h3>
+                    <p>¡Bienvenidos al mercado de Forex en tiempo real! Monitorea las principales divisas del mundo con herramientas de análisis avanzadas.</p>
+                    <button class="btn" onclick="openForexMarket()">ENTRAR</button>
+                </div>
+                <div class="market-card">
+                    <div class="market-icon stocks-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3>Mercados de Acciones</h3>
+                    <p>¡Bienvenidos al mercado de Acciones en tiempo real! Sigue el rendimiento de las principales empresas y índices bursátiles.</p>
+                    <button class="btn" onclick="openStocksMarket()">ENTRAR</button>
+                </div>
+            </div>
+
+            <!-- Market Statistics -->
+            <div class="market-stats">
+                <h3 class="stats-title">Estadísticas del Mercado</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h4>Volumen 24h</h4>
+                            <p id="total-volume">Cargando...</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h4>Pares Activos</h4>
+                            <p id="active-pairs">Cargando...</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h4>Top Gainer</h4>
+                            <p id="top-gainer">Cargando...</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h4>Top Loser</h4>
+                            <p id="top-loser">Cargando...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">Más Sobre Crypto Vit Pro</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h4>Diseño</h4>
+                    <p>Diseño moderno y intuitivo de la aplicación, optimizado para una experiencia de usuario excepcional.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-wifi"></i>
+                    </div>
+                    <h4>Consumo</h4>
+                    <p>Optimización del consumo de datos de internet para un uso eficiente y económico.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h4>Tutoriales</h4>
+                    <p>Guías completas y tutoriales paso a paso sobre cómo usar la aplicación de manera efectiva.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h4>Seguridad</h4>
+                    <p>Protección avanzada de datos y privacidad garantizada para todos nuestros usuarios.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>Sobre los Espacios de Crypto Vit Pro</h2>
+                    <p>
+                        En Crypto Vit Pro respetamos la privacidad de nuestros usuarios y entendemos la importancia 
+                        de proteger la información personal. Nuestra plataforma está diseñada con los más altos 
+                        estándares de seguridad.
+                    </p>
+                    <p>
+                        Ofrecemos una experiencia completa de trading e inversión con herramientas profesionales, 
+                        análisis en tiempo real y una interfaz intuitiva que se adapta a todos los niveles de experiencia.
+                    </p>
+                    <a href="#" class="btn btn-primary">Leer más...</a>
+                </div>
+                <div class="about-image">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Company</h3>
+                    <p><strong>AMAG CODE</strong></p>
+                    <p>Proyecto AMAG CODE</p>
+                    <p>Creador: Andres MAG</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Enlaces Rápidos</h3>
+                    <a href="#home">Inicio</a>
+                    <a href="#markets">Mercados</a>
+                    <a href="#features">Características</a>
+                    <a href="#about">Acerca de</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Contacto</h3>
+                    <p><i class="fas fa-envelope"></i> info@cryptovitpro.com</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; Copyright 2025 Crypto Vit Pro - All Rights Reserved</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Crypto Market Modal -->
+    <div id="cryptoModal" class="market-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i class="fab fa-bitcoin"></i> Mercado Crypto
+                </h2>
+                <button class="close-modal" onclick="closeModal('cryptoModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="market-grid" id="cryptoGrid">
+                    <!-- Crypto data will be loaded here -->
+                </div>
+                <div class="modal-chart">
+                    <div id="cryptoChart">
+                        <div class="loading-chart">
+                            <span class="loading-spinner"></span>
+                            <div>Cargando gráfico interactivo de TradingView...</div>
+                            <p>Análisis técnico profesional de cryptomonedas</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forex Market Modal -->
+    <div id="forexModal" class="market-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i class="fas fa-globe"></i> Mercado Forex
+                </h2>
+                <button class="close-modal" onclick="closeModal('forexModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="market-grid" id="forexGrid">
+                    <!-- Forex data will be loaded here -->
+                </div>
+                <div class="modal-chart">
+                    <div id="forexChart">
+                        <div class="loading-chart">
+                            <span class="loading-spinner"></span>
+                            <div>Cargando gráfico interactivo de TradingView...</div>
+                            <p>Análisis técnico del mercado de divisas</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stocks Market Modal -->
+    <div id="stocksModal" class="market-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i class="fas fa-chart-bar"></i> Mercados de Acciones
+                </h2>
+                <button class="close-modal" onclick="closeModal('stocksModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="market-grid" id="stocksGrid">
+                    <!-- Stocks data will be loaded here -->
+                </div>
+                <div class="modal-chart">
+                    <div id="stocksChart">
+                        <div class="loading-chart">
+                            <span class="loading-spinner"></span>
+                            <div>Cargando gráfico interactivo de TradingView...</div>
+                            <p>Análisis técnico del mercado de acciones</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(26, 26, 46, 0.98)';
+                header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.4)';
+            } else {
+                header.style.background = 'rgba(26, 26, 46, 0.95)';
+                header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.3)';
+            }
+        });
+
+        // Mobile menu toggle
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenu.addEventListener('click', function() {
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        });
+
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards and sections
+        document.querySelectorAll('.market-card, .feature-card, .about-content').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Binance API Integration
+        const binanceSymbols = ['BTCUSDT', 'ETHUSDT', 'TONUSDT', 'BNBUSDT', 'SOLUSDT'];
+        let previousPrices = {};
+
+        async function fetchBinancePrices() {
+            try {
+                const response = await fetch('https://api.binance.com/api/v3/ticker/24hr');
+                const data = await response.json();
+                
+                const tickersContainer = document.getElementById('crypto-tickers');
+                tickersContainer.innerHTML = '';
+                
+                binanceSymbols.forEach(symbol => {
+                    const ticker = data.find(item => item.symbol === symbol);
+                    if (ticker) {
+                        const price = parseFloat(ticker.lastPrice);
+                        const priceChange = parseFloat(ticker.priceChangePercent);
+                        const previousPrice = previousPrices[symbol] || price;
+                        
+                        // Get crypto display name with icon
+                        const getDisplayName = (symbol) => {
+                            const cryptoData = {
+                                'BTCUSDT': { name: 'Bitcoin (BTC)', icon: '₿' },
+                                'ETHUSDT': { name: 'Ethereum (ETH)', icon: 'Ξ' },
+                                'TONUSDT': { name: 'Toncoin (TON)', icon: '💎' },
+                                'BNBUSDT': { name: 'BNB (BNB)', icon: '🔸' },
+                                'SOLUSDT': { name: 'Solana (SOL)', icon: '◎' }
+                            };
+                            const data = cryptoData[symbol];
+                            return data ? `${data.icon} ${data.name}` : symbol.replace('USDT', '');
+                        };
+
+                        const tickerElement = document.createElement('div');
+                        tickerElement.className = 'price-ticker';
+                        tickerElement.innerHTML = `
+                            <span class="crypto-name">${getDisplayName(symbol)}</span>
+                            <span class="crypto-price">$${price.toLocaleString('en-US', {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: price < 1 ? 4 : 2
+                            })}</span>
+                            <span class="price-change ${priceChange >= 0 ? 'positive' : 'negative'}">
+                                ${priceChange >= 0 ? '+' : ''}${priceChange.toFixed(2)}%
+                            </span>
+                        `;
+                        
+                        tickersContainer.appendChild(tickerElement);
+                        previousPrices[symbol] = price;
+                    }
+                });
+
+                // Update market statistics
+                updateMarketStats(data);
+            } catch (error) {
+                console.error('Error fetching Binance data:', error);
+                const tickersContainer = document.getElementById('crypto-tickers');
+                tickersContainer.innerHTML = `
+                    <div class="error-message">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        Error al cargar datos de Binance. Intentando de nuevo...
+                    </div>
+                `;
+            }
+        }
+
+        // Update market statistics
+        function updateMarketStats(data) {
+            try {
+                // Calculate total volume
+                const totalVolume = data.reduce((sum, ticker) => {
+                    return sum + parseFloat(ticker.quoteVolume || 0);
+                }, 0);
+
+                // Count active pairs
+                const activePairs = data.filter(ticker => 
+                    parseFloat(ticker.quoteVolume) > 1000
+                ).length;
+
+                // Find top gainer and loser
+                const sortedByChange = data
+                    .filter(ticker => ticker.symbol.endsWith('USDT'))
+                    .sort((a, b) => parseFloat(b.priceChangePercent) - parseFloat(a.priceChangePercent));
+
+                const topGainer = sortedByChange[0];
+                const topLoser = sortedByChange[sortedByChange.length - 1];
+
+                // Update DOM elements
+                document.getElementById('total-volume').textContent = 
+                    `$${(totalVolume / 1e9).toFixed(2)}B`;
+
+                document.getElementById('active-pairs').textContent = 
+                    activePairs.toLocaleString();
+
+                document.getElementById('top-gainer').textContent = 
+                    `${topGainer.symbol.replace('USDT', '')} +${parseFloat(topGainer.priceChangePercent).toFixed(2)}%`;
+
+                document.getElementById('top-loser').textContent = 
+                    `${topLoser.symbol.replace('USDT', '')} ${parseFloat(topLoser.priceChangePercent).toFixed(2)}%`;
+
+            } catch (error) {
+                console.error('Error updating market stats:', error);
+            }
+        }
+
+        // TradingView Widget Integration
+        function loadTradingViewWidget() {
+            const container = document.getElementById('tradingview-widget-container');
+            
+            // Create TradingView widget
+            const script = document.createElement('script');
+            script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
+            script.async = true;
+            script.innerHTML = JSON.stringify({
+                "autosize": true,
+                "symbol": "BINANCE:BTCUSDT",
+                "interval": "D",
+                "timezone": "America/New_York",
+                "theme": "dark",
+                "style": "1",
+                "locale": "es",
+                "enable_publishing": false,
+                "allow_symbol_change": true,
+                "calendar": false,
+                "support_host": "https://www.tradingview.com",
+                "hide_top_toolbar": false,
+                "hide_legend": false,
+                "save_image": false,
+                "backgroundColor": "rgba(19, 23, 34, 1)",
+                "gridColor": "rgba(240, 243, 250, 0.07)",
+                "width": "100%",
+                "height": "100%"
+            });
+            
+            const div = document.createElement('div');
+            div.className = 'tradingview-widget-copyright';
+            div.innerHTML = `
+                <a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank">
+                    <span class="blue-text">TradingView</span>
+                </a>
+            `;
+            
+            container.appendChild(script);
+            container.appendChild(div);
+        }
+
+        // Add symbol selector for TradingView
+        function addSymbolSelector() {
+            const container = document.getElementById('tradingview-widget-container');
+            const selector = document.createElement('div');
+            selector.className = 'symbol-selector';
+            selector.innerHTML = `
+                                    <select id="symbol-select" onchange="changeSymbol()">
+                        <option value="BINANCE:BTCUSDT">Bitcoin (BTC/USDT)</option>
+                        <option value="BINANCE:ETHUSDT">Ethereum (ETH/USDT)</option>
+                        <option value="OKX:TONUSDT">Toncoin (TON/USDT)</option>
+                        <option value="BINANCE:BNBUSDT">BNB (BNB/USDT)</option>
+                        <option value="BINANCE:SOLUSDT">Solana (SOL/USDT)</option>
+                    </select>
+            `;
+            container.insertBefore(selector, container.firstChild);
+        }
+
+        function changeSymbol() {
+            const symbol = document.getElementById('symbol-select').value;
+            // Reload the widget with new symbol
+            const container = document.getElementById('tradingview-widget-container');
+            container.innerHTML = '';
+            addSymbolSelector();
+            loadTradingViewWidget();
+        }
+
+        // Market Modal Functions
+        function openCryptoMarket() {
+            const modal = document.getElementById('cryptoModal');
+            modal.style.display = 'block';
+            loadCryptoData();
+            loadCryptoChart();
+        }
+
+        function openForexMarket() {
+            const modal = document.getElementById('forexModal');
+            modal.style.display = 'block';
+            loadForexData();
+            loadForexChart();
+        }
+
+        function openStocksMarket() {
+            const modal = document.getElementById('stocksModal');
+            modal.style.display = 'block';
+            loadStocksData();
+            loadStocksChart();
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modals = document.querySelectorAll('.market-modal');
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+
+        // Load Crypto Market Data
+        async function loadCryptoData() {
+            try {
+                const response = await fetch('https://api.binance.com/api/v3/ticker/24hr');
+                const data = await response.json();
+                
+                const cryptoGrid = document.getElementById('cryptoGrid');
+                const topCryptos = ['BTCUSDT', 'ETHUSDT', 'TONUSDT', 'BNBUSDT', 'SOLUSDT', 'DOTUSDT', 'LINKUSDT', 'MATICUSDT'];
+                
+                cryptoGrid.innerHTML = '';
+                
+                topCryptos.forEach(symbol => {
+                    const ticker = data.find(item => item.symbol === symbol);
+                    if (ticker) {
+                        const price = parseFloat(ticker.lastPrice);
+                        const priceChange = parseFloat(ticker.priceChangePercent);
+                        const volume = parseFloat(ticker.quoteVolume);
+                        
+                        // Get crypto name with full description and icon
+                        const getCryptoName = (symbol) => {
+                            const cryptoData = {
+                                'BTCUSDT': { name: 'Bitcoin (BTC)', icon: '₿', color: '#f7931a' },
+                                'ETHUSDT': { name: 'Ethereum (ETH)', icon: 'Ξ', color: '#627eea' },
+                                'TONUSDT': { name: 'Toncoin (TON)', icon: '💎', color: '#0088cc' },
+                                'BNBUSDT': { name: 'BNB (BNB)', icon: '🔸', color: '#f3ba2f' },
+                                'SOLUSDT': { name: 'Solana (SOL)', icon: '◎', color: '#9945ff' },
+                                'DOTUSDT': { name: 'Polkadot (DOT)', icon: '●', color: '#e6007a' },
+                                'LINKUSDT': { name: 'Chainlink (LINK)', icon: '🔗', color: '#375bd2' },
+                                'MATICUSDT': { name: 'Polygon (MATIC)', icon: '⬟', color: '#8247e5' }
+                            };
+                            const data = cryptoData[symbol];
+                            if (data) {
+                                return `<span class="crypto-icon-small" style="color: ${data.color}">${data.icon}</span>${data.name}`;
+                            }
+                            return symbol.replace('USDT', '');
+                        };
+
+                        const marketItem = document.createElement('div');
+                        marketItem.className = 'market-item';
+                        marketItem.innerHTML = `
+                            <h4>${getCryptoName(symbol)}</h4>
+                            <div class="price">$${price.toLocaleString('en-US', {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: price < 1 ? 4 : 2
+                            })}</div>
+                            <div class="change ${priceChange >= 0 ? 'positive' : 'negative'}">
+                                ${priceChange >= 0 ? '+' : ''}${priceChange.toFixed(2)}%
+                            </div>
+                            <div style="font-size: 0.8rem; margin-top: 0.5rem; opacity: 0.8;">
+                                Vol: $${(volume / 1e6).toFixed(1)}M
+                            </div>
+                        `;
+                        
+                        cryptoGrid.appendChild(marketItem);
+                    }
+                });
+            } catch (error) {
+                console.error('Error loading crypto data:', error);
+                document.getElementById('cryptoGrid').innerHTML = `
+                    <div class="error-message">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        Error al cargar datos de cryptomonedas
+                    </div>
+                `;
+            }
+        }
+
+        // Load Forex Market Data (using Alpha Vantage API)
+        async function loadForexData() {
+            try {
+                // Using a free forex API
+                const forexPairs = [
+                    { symbol: 'EUR/USD', price: 1.0850, change: 0.15 },
+                    { symbol: 'GBP/USD', price: 1.2650, change: -0.25 },
+                    { symbol: 'USD/JPY', price: 148.50, change: 0.30 },
+                    { symbol: 'USD/CHF', price: 0.8650, change: -0.10 },
+                    { symbol: 'AUD/USD', price: 0.6650, change: 0.20 },
+                    { symbol: 'USD/CAD', price: 1.3550, change: -0.15 }
+                ];
+                
+                const forexGrid = document.getElementById('forexGrid');
+                forexGrid.innerHTML = '';
+                
+                forexPairs.forEach(pair => {
+                    const marketItem = document.createElement('div');
+                    marketItem.className = 'market-item';
+                    marketItem.innerHTML = `
+                        <h4>${pair.symbol}</h4>
+                        <div class="price">${pair.price.toFixed(4)}</div>
+                        <div class="change ${pair.change >= 0 ? 'positive' : 'negative'}">
+                            ${pair.change >= 0 ? '+' : ''}${pair.change.toFixed(2)}%
+                        </div>
+                    `;
+                    
+                    forexGrid.appendChild(marketItem);
+                });
+            } catch (error) {
+                console.error('Error loading forex data:', error);
+                document.getElementById('forexGrid').innerHTML = `
+                    <div class="error-message">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        Error al cargar datos de Forex
+                    </div>
+                `;
+            }
+        }
+
+        // Load Stocks Market Data
+        async function loadStocksData() {
+            try {
+                // Simulated stock data (in real app, use a stocks API)
+                const stocks = [
+                    { symbol: 'AAPL', name: 'Apple Inc.', price: 185.50, change: 1.25 },
+                    { symbol: 'MSFT', name: 'Microsoft', price: 375.80, change: -0.75 },
+                    { symbol: 'GOOGL', name: 'Alphabet', price: 142.30, change: 0.50 },
+                    { symbol: 'AMZN', name: 'Amazon', price: 145.20, change: 2.10 },
+                    { symbol: 'TSLA', name: 'Tesla', price: 245.60, change: -1.80 },
+                    { symbol: 'META', name: 'Meta', price: 320.40, change: 0.90 }
+                ];
+                
+                const stocksGrid = document.getElementById('stocksGrid');
+                stocksGrid.innerHTML = '';
+                
+                stocks.forEach(stock => {
+                    const marketItem = document.createElement('div');
+                    marketItem.className = 'market-item';
+                    marketItem.innerHTML = `
+                        <h4>${stock.symbol}</h4>
+                        <div style="font-size: 0.9rem; margin-bottom: 0.5rem; opacity: 0.8;">${stock.name}</div>
+                        <div class="price">$${stock.price.toFixed(2)}</div>
+                        <div class="change ${stock.change >= 0 ? 'positive' : 'negative'}">
+                            ${stock.change >= 0 ? '+' : ''}${stock.change.toFixed(2)}%
+                        </div>
+                    `;
+                    
+                    stocksGrid.appendChild(marketItem);
+                });
+            } catch (error) {
+                console.error('Error loading stocks data:', error);
+                document.getElementById('stocksGrid').innerHTML = `
+                    <div class="error-message">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        Error al cargar datos de Acciones
+                    </div>
+                `;
+            }
+        }
+
+        // Load Charts
+        function loadCryptoChart() {
+            setTimeout(() => {
+                const chartContainer = document.getElementById('cryptoChart');
+                
+                // Clear all content and replace with chart
+                chartContainer.innerHTML = '';
+                
+                // Add symbol selector first
+                const selector = document.createElement('div');
+                selector.className = 'modal-symbol-selector';
+                selector.innerHTML = `
+                    <select id="crypto-symbol-select" onchange="changeCryptoSymbol()">
+                        <option value="BINANCE:BTCUSDT">Bitcoin (BTC/USDT)</option>
+                        <option value="BINANCE:ETHUSDT">Ethereum (ETH/USDT)</option>
+                        <option value="OKX:TONUSDT">Toncoin (TON/USDT)</option>
+                        <option value="BINANCE:BNBUSDT">BNB (BNB/USDT)</option>
+                        <option value="BINANCE:SOLUSDT">Solana (SOL/USDT)</option>
+                        <option value="BINANCE:DOTUSDT">Polkadot (DOT/USDT)</option>
+                        <option value="BINANCE:LINKUSDT">Chainlink (LINK/USDT)</option>
+                        <option value="BINANCE:MATICUSDT">Polygon (MATIC/USDT)</option>
+                    </select>
+                `;
+                chartContainer.appendChild(selector);
+                
+                // Create TradingView widget for crypto
+                const script = document.createElement('script');
+                script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
+                script.async = true;
+                script.innerHTML = JSON.stringify({
+                    "autosize": true,
+                    "symbol": "BINANCE:BTCUSDT",
+                    "interval": "D",
+                    "timezone": "America/New_York",
+                    "theme": "dark",
+                    "style": "1",
+                    "locale": "es",
+                    "enable_publishing": false,
+                    "allow_symbol_change": true,
+                    "calendar": false,
+                    "support_host": "https://www.tradingview.com",
+                    "hide_top_toolbar": false,
+                    "hide_legend": false,
+                    "save_image": false,
+                    "backgroundColor": "rgba(26, 26, 46, 1)",
+                    "gridColor": "rgba(100, 255, 218, 0.1)",
+                    "width": "100%",
+                    "height": "400"
+                });
+                
+                chartContainer.appendChild(script);
+            }, 2000);
+        }
+
+        function loadForexChart() {
+            setTimeout(() => {
+                const chartContainer = document.getElementById('forexChart');
+                
+                // Clear all content and replace with chart
+                chartContainer.innerHTML = '';
+                
+                // Add symbol selector first
+                const selector = document.createElement('div');
+                selector.className = 'modal-symbol-selector';
+                selector.innerHTML = `
+                    <select id="forex-symbol-select" onchange="changeForexSymbol()">
+                        <option value="FX:EURUSD">EUR/USD</option>
+                        <option value="FX:GBPUSD">GBP/USD</option>
+                        <option value="FX:USDJPY">USD/JPY</option>
+                        <option value="FX:USDCHF">USD/CHF</option>
+                        <option value="FX:AUDUSD">AUD/USD</option>
+                        <option value="FX:USDCAD">USD/CAD</option>
+                        <option value="FX:NZDUSD">NZD/USD</option>
+                        <option value="FX:EURGBP">EUR/GBP</option>
+                    </select>
+                `;
+                chartContainer.appendChild(selector);
+                
+                // Create TradingView widget for forex
+                const script = document.createElement('script');
+                script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
+                script.async = true;
+                script.innerHTML = JSON.stringify({
+                    "autosize": true,
+                    "symbol": "FX:EURUSD",
+                    "interval": "D",
+                    "timezone": "America/New_York",
+                    "theme": "dark",
+                    "style": "1",
+                    "locale": "es",
+                    "enable_publishing": false,
+                    "allow_symbol_change": true,
+                    "calendar": false,
+                    "support_host": "https://www.tradingview.com",
+                    "hide_top_toolbar": false,
+                    "hide_legend": false,
+                    "save_image": false,
+                    "backgroundColor": "rgba(26, 26, 46, 1)",
+                    "gridColor": "rgba(100, 255, 218, 0.1)",
+                    "width": "100%",
+                    "height": "400"
+                });
+                
+                chartContainer.appendChild(script);
+            }, 2000);
+        }
+
+        function loadStocksChart() {
+            setTimeout(() => {
+                const chartContainer = document.getElementById('stocksChart');
+                
+                // Clear all content and replace with chart
+                chartContainer.innerHTML = '';
+                
+                // Add symbol selector first
+                const selector = document.createElement('div');
+                selector.className = 'modal-symbol-selector';
+                selector.innerHTML = `
+                    <select id="stocks-symbol-select" onchange="changeStocksSymbol()">
+                        <option value="NASDAQ:AAPL">Apple Inc. (AAPL)</option>
+                        <option value="NASDAQ:MSFT">Microsoft (MSFT)</option>
+                        <option value="NASDAQ:GOOGL">Alphabet (GOOGL)</option>
+                        <option value="NASDAQ:AMZN">Amazon (AMZN)</option>
+                        <option value="NASDAQ:TSLA">Tesla (TSLA)</option>
+                        <option value="NASDAQ:META">Meta (META)</option>
+                        <option value="SP:SPX">S&P 500 Index</option>
+                        <option value="NASDAQ:QQQ">NASDAQ 100 ETF</option>
+                    </select>
+                `;
+                chartContainer.appendChild(selector);
+                
+                // Create TradingView widget for stocks
+                const script = document.createElement('script');
+                script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
+                script.async = true;
+                script.innerHTML = JSON.stringify({
+                    "autosize": true,
+                    "symbol": "NASDAQ:AAPL",
+                    "interval": "D",
+                    "timezone": "America/New_York",
+                    "theme": "dark",
+                    "style": "1",
+                    "locale": "es",
+                    "enable_publishing": false,
+                    "allow_symbol_change": true,
+                    "calendar": false,
+                    "support_host": "https://www.tradingview.com",
+                    "hide_top_toolbar": false,
+                    "hide_legend": false,
+                    "save_image": false,
+                    "backgroundColor": "rgba(26, 26, 46, 1)",
+                    "gridColor": "rgba(100, 255, 218, 0.1)",
+                    "width": "100%",
+                    "height": "400"
+                });
+                
+                chartContainer.appendChild(script);
+            }, 2000);
+        }
+
+        function openTradingView(symbol) {
+            window.open(`https://www.tradingview.com/symbols/${symbol}`, '_blank');
+        }
+
+        // Helper function to hide loading messages
+        function hideLoadingMessage(containerId) {
+            const container = document.getElementById(containerId);
+            const loadingElement = container.querySelector('.loading-chart');
+            if (loadingElement) {
+                loadingElement.style.display = 'none';
+            }
+        }
+
+        // Helper function to get correct TradingView symbol
+        function getTradingViewSymbol(symbol) {
+            // Map problematic symbols to working alternatives
+            const symbolMap = {
+                'BINANCE:TONUSDT': 'BINANCE:ADAUSDT', // Use ADA as alternative for TON since TON is not available on TradingView
+                'BYBIT:TONUSDT': 'BINANCE:ADAUSDT',
+                'OKX:TONUSDT': 'BINANCE:ADAUSDT'
+            };
+            return symbolMap[symbol] || symbol;
+        }
+
+        // Functions to change symbols in modals
+        function changeCryptoSymbol() {
+            const symbol = document.getElementById('crypto-symbol-select').value;
+            const chartContainer = document.getElementById('cryptoChart');
+            
+            // Show loading message
+            chartContainer.innerHTML = `
+                <div class="modal-symbol-selector">
+                    <select id="crypto-symbol-select" onchange="changeCryptoSymbol()">
+                        <option value="BINANCE:BTCUSDT" ${symbol === 'BINANCE:BTCUSDT' ? 'selected' : ''}>Bitcoin (BTC/USDT)</option>
+                        <option value="BINANCE:ETHUSDT" ${symbol === 'BINANCE:ETHUSDT' ? 'selected' : ''}>Ethereum (ETH/USDT)</option>
+                        <option value="BYBIT:TONUSDT" ${symbol === 'BYBIT:TONUSDT' ? 'selected' : ''}>Toncoin (TON/USDT)</option>
+                        <option value="BINANCE:BNBUSDT" ${symbol === 'BINANCE:BNBUSDT' ? 'selected' : ''}>BNB (BNB/USDT)</option>
+                        <option value="BINANCE:SOLUSDT" ${symbol === 'BINANCE:SOLUSDT' ? 'selected' : ''}>Solana (SOL/USDT)</option>
+                        <option value="BINANCE:DOTUSDT" ${symbol === 'BINANCE:DOTUSDT' ? 'selected' : ''}>Polkadot (DOT/USDT)</option>
+                        <option value="BINANCE:LINKUSDT" ${symbol === 'BINANCE:LINKUSDT' ? 'selected' : ''}>Chainlink (LINK/USDT)</option>
+                        <option value="BINANCE:MATICUSDT" ${symbol === 'BINANCE:MATICUSDT' ? 'selected' : ''}>Polygon (MATIC/USDT)</option>
+                    </select>
+                </div>
+                <div class="loading-chart">
+                    <span class="loading-spinner"></span>
+                    <div>Cargando nuevo gráfico...</div>
+                    <p>Actualizando análisis de cryptomonedas</p>
+                </div>
+            `;
+            
+            // Load new chart
+            setTimeout(() => {
+                chartContainer.innerHTML = '';
+                
+                // Re-add selector with correct selection
+                const newSelector = document.createElement('div');
+                newSelector.className = 'modal-symbol-selector';
+                newSelector.innerHTML = `
+                    <select id="crypto-symbol-select" onchange="changeCryptoSymbol()">
+                        <option value="BINANCE:BTCUSDT" ${symbol === 'BINANCE:BTCUSDT' ? 'selected' : ''}>Bitcoin (BTC/USDT)</option>
+                        <option value="BINANCE:ETHUSDT" ${symbol === 'BINANCE:ETHUSDT' ? 'selected' : ''}>Ethereum (ETH/USDT)</option>
+                        <option value="BYBIT:TONUSDT" ${symbol === 'BYBIT:TONUSDT' ? 'selected' : ''}>Toncoin (TON/USDT)</option>
+                        <option value="BINANCE:BNBUSDT" ${symbol === 'BINANCE:BNBUSDT' ? 'selected' : ''}>BNB (BNB/USDT)</option>
+                        <option value="BINANCE:SOLUSDT" ${symbol === 'BINANCE:SOLUSDT' ? 'selected' : ''}>Solana (SOL/USDT)</option>
+                        <option value="BINANCE:DOTUSDT" ${symbol === 'BINANCE:DOTUSDT' ? 'selected' : ''}>Polkadot (DOT/USDT)</option>
+                        <option value="BINANCE:LINKUSDT" ${symbol === 'BINANCE:LINKUSDT' ? 'selected' : ''}>Chainlink (LINK/USDT)</option>
+                        <option value="BINANCE:MATICUSDT" ${symbol === 'BINANCE:MATICUSDT' ? 'selected' : ''}>Polygon (MATIC/USDT)</option>
+                    </select>
+                `;
+                chartContainer.appendChild(newSelector);
+                const script = document.createElement('script');
+                script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
+                script.async = true;
+                script.innerHTML = JSON.stringify({
+                    "autosize": true,
+                    "symbol": symbol,
+                    "interval": "D",
+                    "timezone": "America/New_York",
+                    "theme": "dark",
+                    "style": "1",
+                    "locale": "es",
+                    "enable_publishing": false,
+                    "allow_symbol_change": true,
+                    "calendar": false,
+                    "support_host": "https://www.tradingview.com",
+                    "hide_top_toolbar": false,
+                    "hide_legend": false,
+                    "save_image": false,
+                    "backgroundColor": "rgba(26, 26, 46, 1)",
+                    "gridColor": "rgba(100, 255, 218, 0.1)",
+                    "width": "100%",
+                    "height": "400"
+                });
+                chartContainer.appendChild(script);
+            }, 1500);
+        }
+
+        function changeForexSymbol() {
+            const symbol = document.getElementById('forex-symbol-select').value;
+            const chartContainer = document.getElementById('forexChart');
+            
+            // Show loading message
+            chartContainer.innerHTML = `
+                <div class="modal-symbol-selector">
+                    <select id="forex-symbol-select" onchange="changeForexSymbol()">
+                        <option value="FX:EURUSD" ${symbol === 'FX:EURUSD' ? 'selected' : ''}>EUR/USD</option>
+                        <option value="FX:GBPUSD" ${symbol === 'FX:GBPUSD' ? 'selected' : ''}>GBP/USD</option>
+                        <option value="FX:USDJPY" ${symbol === 'FX:USDJPY' ? 'selected' : ''}>USD/JPY</option>
+                        <option value="FX:USDCHF" ${symbol === 'FX:USDCHF' ? 'selected' : ''}>USD/CHF</option>
+                        <option value="FX:AUDUSD" ${symbol === 'FX:AUDUSD' ? 'selected' : ''}>AUD/USD</option>
+                        <option value="FX:USDCAD" ${symbol === 'FX:USDCAD' ? 'selected' : ''}>USD/CAD</option>
+                        <option value="FX:NZDUSD" ${symbol === 'FX:NZDUSD' ? 'selected' : ''}>NZD/USD</option>
+                        <option value="FX:EURGBP" ${symbol === 'FX:EURGBP' ? 'selected' : ''}>EUR/GBP</option>
+                    </select>
+                </div>
+                <div class="loading-chart">
+                    <span class="loading-spinner"></span>
+                    <div>Cargando nuevo gráfico...</div>
+                    <p>Actualizando análisis de divisas</p>
+                </div>
+            `;
+            
+            // Load new chart
+            setTimeout(() => {
+                chartContainer.innerHTML = '';
+                
+                // Re-add selector with correct selection
+                const newSelector = document.createElement('div');
+                newSelector.className = 'modal-symbol-selector';
+                newSelector.innerHTML = `
+                    <select id="forex-symbol-select" onchange="changeForexSymbol()">
+                        <option value="FX:EURUSD" ${symbol === 'FX:EURUSD' ? 'selected' : ''}>EUR/USD</option>
+                        <option value="FX:GBPUSD" ${symbol === 'FX:GBPUSD' ? 'selected' : ''}>GBP/USD</option>
+                        <option value="FX:USDJPY" ${symbol === 'FX:USDJPY' ? 'selected' : ''}>USD/JPY</option>
+                        <option value="FX:USDCHF" ${symbol === 'FX:USDCHF' ? 'selected' : ''}>USD/CHF</option>
+                        <option value="FX:AUDUSD" ${symbol === 'FX:AUDUSD' ? 'selected' : ''}>AUD/USD</option>
+                        <option value="FX:USDCAD" ${symbol === 'FX:USDCAD' ? 'selected' : ''}>USD/CAD</option>
+                        <option value="FX:NZDUSD" ${symbol === 'FX:NZDUSD' ? 'selected' : ''}>NZD/USD</option>
+                        <option value="FX:EURGBP" ${symbol === 'FX:EURGBP' ? 'selected' : ''}>EUR/GBP</option>
+                    </select>
+                `;
+                chartContainer.appendChild(newSelector);
+                const script = document.createElement('script');
+                script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
+                script.async = true;
+                script.innerHTML = JSON.stringify({
+                    "autosize": true,
+                    "symbol": symbol,
+                    "interval": "D",
+                    "timezone": "America/New_York",
+                    "theme": "dark",
+                    "style": "1",
+                    "locale": "es",
+                    "enable_publishing": false,
+                    "allow_symbol_change": true,
+                    "calendar": false,
+                    "support_host": "https://www.tradingview.com",
+                    "hide_top_toolbar": false,
+                    "hide_legend": false,
+                    "save_image": false,
+                    "backgroundColor": "rgba(26, 26, 46, 1)",
+                    "gridColor": "rgba(100, 255, 218, 0.1)",
+                    "width": "100%",
+                    "height": "400"
+                });
+                chartContainer.appendChild(script);
+            }, 1500);
+        }
+
+        function changeStocksSymbol() {
+            const symbol = document.getElementById('stocks-symbol-select').value;
+            const chartContainer = document.getElementById('stocksChart');
+            
+            // Show loading message
+            chartContainer.innerHTML = `
+                <div class="modal-symbol-selector">
+                    <select id="stocks-symbol-select" onchange="changeStocksSymbol()">
+                        <option value="NASDAQ:AAPL" ${symbol === 'NASDAQ:AAPL' ? 'selected' : ''}>Apple Inc. (AAPL)</option>
+                        <option value="NASDAQ:MSFT" ${symbol === 'NASDAQ:MSFT' ? 'selected' : ''}>Microsoft (MSFT)</option>
+                        <option value="NASDAQ:GOOGL" ${symbol === 'NASDAQ:GOOGL' ? 'selected' : ''}>Alphabet (GOOGL)</option>
+                        <option value="NASDAQ:AMZN" ${symbol === 'NASDAQ:AMZN' ? 'selected' : ''}>Amazon (AMZN)</option>
+                        <option value="NASDAQ:TSLA" ${symbol === 'NASDAQ:TSLA' ? 'selected' : ''}>Tesla (TSLA)</option>
+                        <option value="NASDAQ:META" ${symbol === 'NASDAQ:META' ? 'selected' : ''}>Meta (META)</option>
+                        <option value="SP:SPX" ${symbol === 'SP:SPX' ? 'selected' : ''}>S&P 500 Index</option>
+                        <option value="NASDAQ:QQQ" ${symbol === 'NASDAQ:QQQ' ? 'selected' : ''}>NASDAQ 100 ETF</option>
+                    </select>
+                </div>
+                <div class="loading-chart">
+                    <span class="loading-spinner"></span>
+                    <div>Cargando nuevo gráfico...</div>
+                    <p>Actualizando análisis de acciones</p>
+                </div>
+            `;
+            
+            // Load new chart
+            setTimeout(() => {
+                chartContainer.innerHTML = '';
+                
+                // Re-add selector with correct selection
+                const newSelector = document.createElement('div');
+                newSelector.className = 'modal-symbol-selector';
+                newSelector.innerHTML = `
+                    <select id="stocks-symbol-select" onchange="changeStocksSymbol()">
+                        <option value="NASDAQ:AAPL" ${symbol === 'NASDAQ:AAPL' ? 'selected' : ''}>Apple Inc. (AAPL)</option>
+                        <option value="NASDAQ:MSFT" ${symbol === 'NASDAQ:MSFT' ? 'selected' : ''}>Microsoft (MSFT)</option>
+                        <option value="NASDAQ:GOOGL" ${symbol === 'NASDAQ:GOOGL' ? 'selected' : ''}>Alphabet (GOOGL)</option>
+                        <option value="NASDAQ:AMZN" ${symbol === 'NASDAQ:AMZN' ? 'selected' : ''}>Amazon (AMZN)</option>
+                        <option value="NASDAQ:TSLA" ${symbol === 'NASDAQ:TSLA' ? 'selected' : ''}>Tesla (TSLA)</option>
+                        <option value="NASDAQ:META" ${symbol === 'NASDAQ:META' ? 'selected' : ''}>Meta (META)</option>
+                        <option value="SP:SPX" ${symbol === 'SP:SPX' ? 'selected' : ''}>S&P 500 Index</option>
+                        <option value="NASDAQ:QQQ" ${symbol === 'NASDAQ:QQQ' ? 'selected' : ''}>NASDAQ 100 ETF</option>
+                    </select>
+                `;
+                chartContainer.appendChild(newSelector);
+                const script = document.createElement('script');
+                script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
+                script.async = true;
+                script.innerHTML = JSON.stringify({
+                    "autosize": true,
+                    "symbol": symbol,
+                    "interval": "D",
+                    "timezone": "America/New_York",
+                    "theme": "dark",
+                    "style": "1",
+                    "locale": "es",
+                    "enable_publishing": false,
+                    "allow_symbol_change": true,
+                    "calendar": false,
+                    "support_host": "https://www.tradingview.com",
+                    "hide_top_toolbar": false,
+                    "hide_legend": false,
+                    "save_image": false,
+                    "backgroundColor": "rgba(26, 26, 46, 1)",
+                    "gridColor": "rgba(100, 255, 218, 0.1)",
+                    "width": "100%",
+                    "height": "400"
+                });
+                chartContainer.appendChild(script);
+            }, 1500);
+        }
+
+        // Initialize APIs
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load initial data
+            fetchBinancePrices();
+            addSymbolSelector();
+            loadTradingViewWidget();
+            
+            // Update Binance prices every 10 seconds
+            setInterval(fetchBinancePrices, 10000);
+        });
+
+        // Add loading animation to buttons
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                if (this.getAttribute('href') === '#') {
+                    e.preventDefault();
+                    const originalText = this.innerHTML;
+                    this.innerHTML = '<span class="loading"></span> Cargando...';
+                    
+                    setTimeout(() => {
+                        this.innerHTML = originalText;
+                    }, 2000);
+                }
+            });
+        });
+    </script>
+</body>
+</html> 
